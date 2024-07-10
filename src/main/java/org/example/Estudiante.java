@@ -77,4 +77,6 @@ public class Estudiante {
         System.out.println("Carrera: " + this.getCarrera());
         System.out.println("Tiene beca: " + this.getBeca());
     };
+
+
 }

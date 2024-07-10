@@ -24,6 +24,9 @@ public class form1 {
     String user="root";
     String password="123456";
 
+    /*Se crea el estudiante*/
+    Estudiante estudiante=new Estudiante();
+
 
     public form1() {
         carrera.addActionListener(new ActionListener() {
@@ -32,27 +35,40 @@ public class form1 {
 
             }
         });
+
         registrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                /*Se setea los valores en el objeto*/
+                estudiante.setCodigo_unico(codigoU.getText());
+                estudiante.setNombre(nombre.getText());
+                estudiante.setEdad(Integer.parseInt(edad.getText()));
+                estudiante.setCarrera("Software");
+                estudiante.setBeca("Si");
+
+                /*Preparamos cadena de inserción*/
+
                 String sql="insert into estudiantes (codigo_unico,nombre,edad,carrera,beca) values (?,?,?,?,?)";
+
 
                 try (Connection connection= DriverManager.getConnection(url,user,password)){
                     System.out.println("Connected to database");
-                    System.out.println("Ingresado Datos...");
+                    System.out.println(">Ingresado Datos<");
                     PreparedStatement CadenaPreparada= connection.prepareStatement(sql);
 
-                    CadenaPreparada.setString(1, codigoU.getText());
-                    CadenaPreparada.setString(2, nombre.getText());
-                    CadenaPreparada.setInt(3,Integer.parseInt(edad.getText()));
-                    CadenaPreparada.setString(4, "Software");
-                    CadenaPreparada.setString(5, "si");
+                    CadenaPreparada.setString(1,estudiante.getCodigo_unico() );
+                    CadenaPreparada.setString(2, estudiante.getNombre());
+                    CadenaPreparada.setInt(3, estudiante.getEdad());
+                    CadenaPreparada.setString(4, estudiante.getCarrera());
+                    CadenaPreparada.setString(5, estudiante.getBeca());
 
                     CadenaPreparada.executeUpdate();
 
                     System.out.println("Ingreso Exitoso...");
+                    estudiante.mostrar_estudiante();
                     estado.setText("Ingreso Exitoso...");
+
 
                 }
                 catch (SQLException e1){
@@ -61,6 +77,14 @@ public class form1 {
                 }
 
 
+            }
+        });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                codigoU.setText(null);
+                nombre.setText(null);
+                edad.setText(null);
             }
         });
     }
