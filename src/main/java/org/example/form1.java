@@ -13,11 +13,11 @@ public class form1 {
     public JTextField codigoU;
     public JTextField nombre;
     public JTextField edad;
-    public JComboBox<String> carrera ;
-    public JCheckBox becadoCheckBox;
     public JButton registrarButton;
     public JButton cancelarButton;
     private JLabel estado;
+    private JTextField carrera;
+    private JTextField beca;
 
     /*Coneccion con la base de datos*/
     String url="jdbc:mysql://localhost:3306/bdestudiantes";
@@ -44,8 +44,8 @@ public class form1 {
                 estudiante.setCodigo_unico(codigoU.getText());
                 estudiante.setNombre(nombre.getText());
                 estudiante.setEdad(Integer.parseInt(edad.getText()));
-                estudiante.setCarrera("Software");
-                estudiante.setBeca("Si");
+                estudiante.setCarrera(carrera.getText());
+                estudiante.setBeca(beca.getText());
 
                 /*Preparamos cadena de inserción*/
 
